@@ -10,6 +10,7 @@ class HomeController extends AbstractController
      */
     public function index(): string
     {
-        return $this->renderView("/template/home/home_base.phtml");
+        return $this->renderView("/template/home/home_base.phtml", ["name_page" => "homePage"]);
     }
 }
+    
