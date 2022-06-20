@@ -2,6 +2,7 @@
 
 require_once dirname(__DIR__) . "/Controller/HomeController.php";
 require_once dirname(__DIR__) . "/Controller/ContactController.php";
+require_once dirname(__DIR__) . "/Controller/ArticleController.php";
 
 
 /**
@@ -14,6 +15,10 @@ const ROUTING = [
     ],
     "contact" => [
         "controller" => "ContactController",
+        "action" => "index"
+    ],
+    "article" => [
+        "controller" => "ArticleController",
         "action" => "index"
     ]
 ];
