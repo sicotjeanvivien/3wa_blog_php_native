@@ -1,8 +1,9 @@
 <?php
 
-require_once dirname(__DIR__) . "/Controller/HomeController.php";
-require_once dirname(__DIR__) . "/Controller/ContactController.php";
 require_once dirname(__DIR__) . "/Controller/ArticleController.php";
+require_once dirname(__DIR__) . "/Controller/ContactController.php";
+require_once dirname(__DIR__) . "/Controller/HomeController.php";
+require_once dirname(__DIR__) . "/Controller/UserController.php";
 
 
 /**
@@ -13,12 +14,16 @@ const ROUTING = [
         "controller" => "HomeController",
         "action" => "index"
     ],
-    "contact" => [
-        "controller" => "ContactController",
-        "action" => "index"
-    ],
     "article" => [
         "controller" => "ArticleController",
+        "action" => "index"
+    ],
+    "user" => [
+    "controller" => "UserController",
+        "action" => "index"
+    ],
+    "contact" => [
+        "controller" => "ContactController",
         "action" => "index"
     ]
 ];

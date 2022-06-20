@@ -20,7 +20,7 @@ abstract class AbstractRepository
      * @param array $params Params [":variableSQL" => "valeur",...]
      * @return query result
      */
-    protected function executeQuery(string $query, string $class, array $params = [])
+    protected function executeQuery(string $query, string $class, array $params = []):array
     {
         $conn = $this->connect();
         $result = $conn->prepare($query);
