@@ -5,6 +5,9 @@ require_once dirname(__DIR__) . "/Repository/ArticleRepository.php";
 class ArticleController extends AbstractController
 {
 
+    /**
+     * @Route articles
+     */
     public function index(): string
     {
         $articles = [];

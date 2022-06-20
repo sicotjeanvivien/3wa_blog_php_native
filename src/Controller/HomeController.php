@@ -6,6 +6,7 @@ class HomeController extends AbstractController
 {
 
     /**
+     * @Route home 
      * @return string utilise la methode renderView() définie dans la classe abstrait parent abstractController 
      */
     public function index(): string

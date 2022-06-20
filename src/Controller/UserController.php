@@ -5,7 +5,19 @@ require_once dirname(__DIR__) . "/Repository/UserRepository.php";
 
 class UserController extends AbstractController
 {
-    public function index()
+
+    /**
+     * @Route connexion
+     */
+    public function connexion()
+    {
+       return $this->renderView("user_connexion.phtml");
+    }
+
+    /**
+     * @route user_add
+     */
+    public function add()
     {
 
         $error = null;

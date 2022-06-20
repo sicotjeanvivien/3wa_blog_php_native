@@ -18,9 +18,13 @@ const ROUTING = [
         "controller" => "ArticleController",
         "action" => "index"
     ],
-    "user" => [
-    "controller" => "UserController",
-        "action" => "index"
+    "user_connexion" => [
+        "controller" => "UserController",
+        "action" => "connexion"
+    ],
+    "user_add" => [
+        "controller" => "UserController",
+        "action" => "add"
     ],
     "contact" => [
         "controller" => "ContactController",
@@ -31,13 +35,13 @@ const ROUTING = [
 /**
  * function vérifiant l'existence d'une page avant d'instancier le bon controleur définie dans ROUTING
  */
-function getRouteFromUrl():void
+function getRouteFromUrl(): void
 {
     $path = ROUTING["home"];
     if (isset($_GET["page"]) && isset(ROUTING[$_GET["page"]])) {
         $path =   ROUTING[$_GET["page"]];
     }
-    
+
     $controller = new $path['controller'];
     $controller->{$path['action']}();
 }
