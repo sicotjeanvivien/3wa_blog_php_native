@@ -1,21 +1,23 @@
 <h1>Liste des articles</h1>
 
 <table class="table table-info table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-   
-  </tbody>
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">id</th>
+			<th scope="col">Titre</th>
+			<th scope="col">date de publication</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($params["articles"] as $key => $article) { ?>
+			<tr>
+				<th scope="row">1</th>
+				<td><?php echo $article->getId() ?></td>
+				<td><?php echo $article->getTitle() ?></td>
+				<td><?php echo (new DateTime($article->getDate_published()))->format("d/m/Y") ?></td>
+			</tr>
+		<?php } ?>
+
+	</tbody>
 </table>

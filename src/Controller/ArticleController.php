@@ -10,6 +10,7 @@ class ArticleController extends AbstractController
         $articles = [];
         $articleRepository =  new ArticleRepository();
         $articles = $articleRepository->findAll();
+        
         return $this->renderView("/template/article/article_base.phtml", ["articles" => $articles]);
     }
 }

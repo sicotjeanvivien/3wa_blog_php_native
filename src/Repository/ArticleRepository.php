@@ -9,8 +9,6 @@ class ArticleRepository extends AbstractRepository
     public function findAll()
     {
         $query = "SELECT * FROM article;";
-
-        $result = $this->executeQuery($query, "Article");
-        var_dump($result);
+        return $this->executeQuery($query, "Article");
     }
 }
