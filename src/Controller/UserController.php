@@ -5,9 +5,9 @@ require_once dirname(__DIR__) . "/Repository/UserRepository.php";
 
 class UserController extends AbstractController
 {
-    public function index()
-    {
 
+    public function add()
+    {
         $error = null;
         $message = "";
         // Vérification de l'eexistence des index dans $_POST
@@ -50,7 +50,7 @@ class UserController extends AbstractController
         }
 
         // renvoie de la vue correspondante avec des paramètres 
-        return $this->renderView("/template/user/user_base.phtml", [
+        return $this->renderView("/template/user/user_add.phtml", [
             "error" => $error,
             "message" => $message
         ]);
