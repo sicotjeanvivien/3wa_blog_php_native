@@ -11,7 +11,17 @@ class UserController extends AbstractController
      */
     public function connexion()
     {
-       return $this->renderView("user_connexion.phtml");
+        $error = null;
+        if (isset($_POST["username"]) && isset($_POST["password"])) {
+            $error = false;
+            $userRepository = new UserRepository();
+            $user = $userRepository->findOneByUsername($_POST["username"])[0] ?? null;
+            if (!empty($user) && password_verify($_POST["password"], $user->getPassword())) {
+                $error = true;
+                $_SESSION['user_is_connect'] = true;
+            }
+        }
+        return $this->renderView("/template/user/user_connexion.phtml", ["error" => $error]);
     }
 
     /**
