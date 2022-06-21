@@ -8,5 +8,19 @@
         <input type="password" class="form-control" id="password" name="password" placeholder="votre not de passe...">
     </div>
     <input class="btn btn-warning" type="submit" value="Créer">
-
 </form>
+
+<div class="mt-3">
+    <?php if (isset($params["error"]) && !empty($params)) { ?>
+        <?php if (!$params["error"]) { ?>
+            <div class="alert alert-danger" role="alert">
+                Erreur: l'utilisateur ou le mot de passe ne sont pas valide.
+            </div>
+        <?php } ?>
+        <?php if ($params["error"]) { ?>
+            <div class="alert alert-success" role="alert">
+                Vous étes connecté.
+            </div>
+        <?php } ?>
+    <?php } ?>
+</div>

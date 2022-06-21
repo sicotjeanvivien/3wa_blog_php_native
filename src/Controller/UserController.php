@@ -18,7 +18,7 @@ class UserController extends AbstractController
             $user = $userRepository->findOneByUsername($_POST["username"])[0] ?? null;
             if (!empty($user) && password_verify($_POST["password"], $user->getPassword())) {
                 $error = true;
-                $_SESSION['user_is_connect'] = true;
+                $_SESSION['user_is_connected'] = true;
             }
         }
         return $this->renderView("/template/user/user_connexion.phtml", ["error" => $error]);

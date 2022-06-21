@@ -16,7 +16,15 @@
                     <a class="nav-link" href="/?page=contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?page=user_connexion">Connexion</a>
+                    <?php if (
+                        isset($_SESSION["user_is_connected"])
+                        && $_SESSION["user_is_connected"]
+                    ) { ?>
+                        <a class="nav-link" href="/?page=user_disconnect">Déconnexion</a>
+                    <?php }else { ?>
+                        <a class="nav-link" href="/?page=user_connexion">Connexion</a>
+                    <?php } ?>
+
                 </li>
             </ul>
         </div>
