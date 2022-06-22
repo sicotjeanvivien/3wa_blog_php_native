@@ -3,27 +3,27 @@
 class Article
 {
     /**
-     * @param int $id
+     * @var int $id
      */
     private int $id;
 
     /**
-     *@param string|null $title 
+     *@var string|null $title 
      */
     private ?string $title;
 
     /**
-     * @param string|null $content
+     * @var string|null $content
      */
     private ?string $content;
 
     /**
-     * @param string|null $date_published
+     * @var string|null $date_published
      */
     private string $date_published;
 
     /**
-     * @param int|null $user_id reference User(id)
+     * @var int|null $user_id reference User(id)
      */
     private int $user_id;
 
@@ -48,7 +48,7 @@ class Article
      *
      * @return  self
      */
-    public function setTitle(?string $title):void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -56,7 +56,7 @@ class Article
     /**
      * Get the value of content
      */
-    public function getContent():string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -66,7 +66,7 @@ class Article
      *
      * @return  self
      */
-    public function setContent(string $content):void
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -74,9 +74,9 @@ class Article
     /**
      * Get the value of date_published
      */
-    public function getDate_published():string
+    public function getDate_published(): DateTime
     {
-        return $this->date_published;
+        return new DateTime($this->date_published);
     }
 
     /**
@@ -84,7 +84,7 @@ class Article
      *
      * @return  self
      */
-    public function setDate_published(string $date_published):void
+    public function setDate_published(string $date_published): void
     {
         $this->date_published = $date_published;
     }
@@ -92,7 +92,7 @@ class Article
     /**
      * Get the value of user_id
      */
-    public function getUser_id():int
+    public function getUser_id(): int
     {
         return $this->user_id;
     }
@@ -102,7 +102,7 @@ class Article
      *
      * @return  self
      */
-    public function setUser_id(int $user_id):void
+    public function setUser_id(int $user_id): void
     {
         $this->user_id = $user_id;
     }

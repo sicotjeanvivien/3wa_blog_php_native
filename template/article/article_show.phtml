@@ -1,1 +1,19 @@
-<h1>Show Article</h1>
+<h3 class="text text-uppercase fw-bolder"><?php echo $params["article"]->getTitle(); ?></h3>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <p class="text-end">
+            Créé par <?php echo $params["user"]->getLastname() . " " . $params["user"]->getFirstname() ?>
+            le <?php echo $params["article"]->getDate_published()->format("d/m/Y"); ?>
+        </p>
+    </div>
+    <div class="col-12">
+        <p class="text-start fs-5">
+            <?php foreach ($params["categories"] as $key => $category) { ?>
+                <span class="badge rounded-pill text-bg-success"> #<?php echo $category->getName(); ?></span>
+            <?php } ?>
+        </p>
+    </div>
+    <div class="col-8">
+        <p class="text-md-start lh-sm font-monospace "><?php echo $params["article"]->getContent(); ?></p>
+    </div>
+</div>

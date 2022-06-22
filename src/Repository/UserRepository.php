@@ -36,4 +36,18 @@ class UserRepository extends AbstractRepository
         ];
         return $this->executeQuery($query, "User", $params);
     }
+
+    /**
+     * @param int $id user
+     * @return User
+     */
+    public function find(int $id): mixed
+    {
+        $query = " SELECT * 
+                  FROM user 
+                  WHERE id = :id ;
+                ";
+        $params = [":id" => $id];
+        return $this->executeQuery($query, "User", $params);
+    }
 }

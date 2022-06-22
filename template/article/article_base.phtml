@@ -16,7 +16,7 @@
 				<th scope="row">1</th>
 				<td><?php echo $article->getId() ?></td>
 				<td><?php echo $article->getTitle() ?></td>
-				<td><?php echo (new DateTime($article->getDate_published()))->format("d/m/Y") ?></td>
+				<td><?php echo ($article->getDate_published())->format("d/m/Y") ?></td>
 				<td>
 					<a class="btn btn-primary" href="/?page=article_show&id=<?php echo $article->getId() ?>">Voir</a>
 				</td>
