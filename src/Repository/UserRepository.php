@@ -5,21 +5,6 @@ require_once dirname(__DIR__) . "/Model/User.php";
 
 class UserRepository extends AbstractRepository
 {
-
-    /**
-     * @param string $username
-     * @return mixed une valeur 
-     */
-    public function findOneByUsername(string $username): mixed
-    {
-        $query = " SELECT * 
-                  FROM user 
-                  WHERE username = :username ;
-                ";
-        $params = [":username" => $username];
-        return $this->executeQuery($query, "user", $params);
-    }
-
     /**
      * @param User $user prend en paramètre un onject User
      * @return mixed une valeur 
