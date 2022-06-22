@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 abstract class AbstractRepository
 {
 
@@ -20,13 +22,21 @@ abstract class AbstractRepository
      * @param array $params Params [":variableSQL" => "valeur",...]
      * @return query result
      */
-    protected function executeQuery(string $query, string $class, array $params = []):array
+    protected function executeQuery(string $query, string $class, array $params = []): mixed
     {
         $conn = $this->connect();
-        $result = $conn->prepare($query);
-        foreach ($params as $key => $param) $result->bindValue($key, $param);
-        $result->execute();
+        $stm = $conn->prepare($query);
+        foreach ($params as $key => $param) $stm->bindValue($key, $param);
+        $stm->execute();
         $conn = null;
-        return $result->fetchAll(PDO::FETCH_CLASS, $class);
+
+        $result = null;
+        
+        $stm->setFetchMode(PDO::FETCH_CLASS, $class);
+
+        if ($stm->rowCount() === 1) $result = $stm->fetch();
+        if ($stm->rowCount() > 1) $result = $stm->fetchAll();
+
+        return $result;
     }
 }

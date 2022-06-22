@@ -34,6 +34,6 @@ class UserRepository extends AbstractRepository
             ":username" => $user->getUsername(),
             ":password" => $user->getPassword()
         ];
-        return $this->executeQuery($query, "user", $params);
+        return $this->executeQuery($query, "User", $params);
     }
 }

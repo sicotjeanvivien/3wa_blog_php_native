@@ -18,9 +18,17 @@ const ROUTING = [
         "controller" => "ArticleController",
         "action" => "index"
     ],
+    "article_show" => [
+        "controller" => "ArticleController",
+        "action" => "show"
+    ],
     "user_connexion" => [
         "controller" => "UserController",
         "action" => "connexion"
+    ],
+    "user_disconnect" => [
+        "controller" => "UserController",
+        "action" => "disconnect"
     ],
     "user_add" => [
         "controller" => "UserController",

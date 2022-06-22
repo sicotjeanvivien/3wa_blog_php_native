@@ -13,7 +13,21 @@ class ArticleController extends AbstractController
         $articles = [];
         $articleRepository =  new ArticleRepository();
         $articles = $articleRepository->findAll();
-        
+
         return $this->renderView("/template/article/article_base.phtml", ["articles" => $articles]);
+    }
+
+    /**
+     * @Route show
+     */
+    public function show()
+    {
+        $article = null;
+        if (isset($_GET["id"])) {
+            $articleRepository = new ArticleRepository();
+            $article = $articleRepository->find($_GET["id"]);
+
+        }
+        return $this->renderView("/template/article/article_show.phtml", []);
     }
 }

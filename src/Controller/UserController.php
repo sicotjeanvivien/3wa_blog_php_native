@@ -7,7 +7,7 @@ class UserController extends AbstractController
 {
 
     /**
-     * @Route connexion
+     * @Route user_connexion
      */
     public function connexion()
     {
@@ -15,17 +15,27 @@ class UserController extends AbstractController
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             $error = false;
             $userRepository = new UserRepository();
-            $user = $userRepository->findOneByUsername($_POST["username"])[0] ?? null;
+            $user = $userRepository->findOneByUsername($_POST["username"]) ?? null;
             if (!empty($user) && password_verify($_POST["password"], $user->getPassword())) {
                 $error = true;
                 $_SESSION['user_is_connected'] = true;
+                header("Location: /?page=home");
             }
         }
         return $this->renderView("/template/user/user_connexion.phtml", ["error" => $error]);
     }
 
     /**
-     * @route user_add
+     * @Route user_disconnect
+     */
+    public function disconnect()
+    {
+        unset($_SESSION["user_is_connected"]);
+        header("Location: /?page=home");
+    }
+
+    /**
+     * @Route user_add
      */
     public function add()
     {

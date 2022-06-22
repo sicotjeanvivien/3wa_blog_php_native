@@ -7,6 +7,7 @@
 			<th scope="col">id</th>
 			<th scope="col">Titre</th>
 			<th scope="col">date de publication</th>
+			<th scope="col">Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,6 +17,9 @@
 				<td><?php echo $article->getId() ?></td>
 				<td><?php echo $article->getTitle() ?></td>
 				<td><?php echo (new DateTime($article->getDate_published()))->format("d/m/Y") ?></td>
+				<td>
+					<a class="btn btn-primary" href="/?page=article_show&id=<?php echo $article->getId() ?>">Voir</a>
+				</td>
 			</tr>
 		<?php } ?>
 
