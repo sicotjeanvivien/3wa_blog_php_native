@@ -137,3 +137,7 @@ SELECT * FROM article WHERE title IS NOT NULL;
 UPDATE article SET title = null WHERE id = 1;
 
 SELECT * FROM article WHERE title IS NOT NULL;
+
+
+
+ALTER TABLE article ADD image VARCHAR ;

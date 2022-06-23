@@ -1,0 +1,23 @@
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">Titre</label>
+        <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Catégorie</label>
+        <select class="form-select" id="categories" multiple name="categories[]" >
+            <?php foreach ($params["categories"] as $key => $category) { ?>
+                <option value="<?php echo $category->getId(); ?>"><?php echo $category->getName(); ?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" class="form-control" name="img" id="image">
+    </div>
+    <div class="mb-3">
+        <label for="content">Contenu</label>
+        <textarea class="form-control" name="content" placeholder="Contenu de l'article..." id="content" cols="10" rows="10"></textarea>
+    </div>
+    <input type="submit" class="btn btn-warning" value="Créer" name="valide">
+</form>

@@ -1,4 +1,9 @@
 <h1>Liste des articles</h1>
+<?php if (isset($_SESSION["user_is_connected"]) && $_SESSION["user_is_connected"]) { ?>
+	<div class="d-flex justify-content-end mb-3">
+		<a class="btn btn-warning" href="/?page=article_add">Créer un article</a>
+	</div>
+<?php }  ?>
 
 <table class="table table-info table-striped">
 	<thead>

@@ -28,6 +28,11 @@ class Article
     private int $user_id;
 
     /**
+     * @var string|null $file_path_image
+     */
+    private ?string $file_path_image;
+
+    /**
      * Get the value of id
      */
     public function getId(): string
@@ -105,5 +110,27 @@ class Article
     public function setUser_id(int $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    /**
+     * Get $file_path_image
+     *
+     * @return  string|null
+     */
+    public function getFile_path_image(): ?string
+    {
+        return $this->file_path_image;
+    }
+
+    /**
+     * Set $file_path_image
+     *
+     * @param  string|null  $file_path_image
+     *
+     * @return  void
+     */
+    public function setFile_path_image(string $file_path_image):void
+    {
+        $this->file_path_image = $file_path_image;
     }
 }

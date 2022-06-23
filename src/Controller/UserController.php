@@ -19,6 +19,7 @@ class UserController extends AbstractController
             if (!empty($user) && password_verify($_POST["password"], $user->getPassword())) {
                 $error = true;
                 $_SESSION['user_is_connected'] = true;
+                $_SESSION['user_id'] = $user->getId();
                 header("Location: /?page=home");
             }
         }
@@ -44,10 +45,7 @@ class UserController extends AbstractController
         // Vérification de l'eexistence des index dans $_POST
         if (
             !empty($_POST)
-            &&  isset($_POST["lastname"])
-            &&  isset($_POST["firstname"])
-            &&  isset($_POST["username"])
-            &&  isset($_POST["password"])
+            &&  isset($_POST["lastname"], $_POST["firstname"], $_POST["username"], $_POST["password"])
         ) {
             $error = false;
             $message = "Erreur : Informations invalides.";

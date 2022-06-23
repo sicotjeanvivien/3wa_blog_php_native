@@ -24,19 +24,19 @@ abstract class AbstractRepository
      */
     protected function executeQuery(string $query, string $class, array $params = []): mixed
     {
+        $result = null;
+        // Connection BDD en PDO
         $conn = $this->connect();
         $stm = $conn->prepare($query);
         foreach ($params as $key => $param) $stm->bindValue($key, $param);
-        $stm->execute();
-        $conn = null;
-
-        $result = null;
+        if ($stm->execute()) {
+            // récupérer les lignes de la BDD sous forme d'object
+            strlen($class) && $stm->setFetchMode(PDO::FETCH_CLASS, $class);
+            if ($stm->rowCount() === 1) $result = $stm->fetch();
+            if ($stm->rowCount() > 1) $result = $stm->fetchAll();
+        }
         
-        $stm->setFetchMode(PDO::FETCH_CLASS, $class);
-
-        if ($stm->rowCount() === 1) $result = $stm->fetch();
-        if ($stm->rowCount() > 1) $result = $stm->fetchAll();
-
+        $conn = null;
         return $result;
     }
 }
