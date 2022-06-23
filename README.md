@@ -1,4 +1,4 @@
-﻿# BLOG EN PHP NATIVE
+# BLOG EN PHP NATIVE
 
 Le but de l'exercice est de mettre en place une structure d'application respectant le disgnPattern MVC via un blog. Nous allons mettre en place :
     - un router permattant de gérer les pages via les URL
@@ -83,7 +83,7 @@ Nous allons créer un formulaire de création d'utilisateur avec hash du mot de 
 
 ### Consignes : 
   - créer la page user_add (user_add.phtml), avec son controller (UserController->add();)
-  - créer un formulaire /template/user/template_part/__add_form.phtml pour créer un utilisateur dans la page user, faire un include dans la page user_add
+  - créer un formulaire /template_part/__add_form.phtml pour créer un utilisateur dans la page user, faire un include dans la page user_add
   - créer le Model USER
   - créer le UserRepository
   - soumettre le formulaire user_add sur la même page que l'affichage du formulaire 
@@ -125,7 +125,7 @@ Nous allons créer une page avec notre article en détail
  - afficher les categories lié à cet article exemple "#category2  #category1"
  - pour cela il faudra créer le model Category.php, CategoryRepository.php
  - requete SQL : 
-   - SELECT DISTINCT id, name FROM category JOIN article_category as ac WHERE ac.article_id = :article_id ;
+   - SELECT id, name FROM category INNER JOIN article_category ON category.id = article_category.category_id WHERE article_category.article_id = 1;
    - SELECT * FROM article WHERE id = :id;
    - SELECT * FROM user WHERE id = :id ;
  - faire une mise en forme propre, utiliser bootstrap ou perso 
@@ -133,10 +133,23 @@ Nous allons créer une page avec notre article en détail
 
 ## ETAPE 7 : CREATION D'ARTICLE
 
-Nous allons mettre en place la création d'article liée à l'utilisateur courant
+Nous allons mettre en place la création d'article liée à l'utilisateur courant en y ajoutant une image
+### Indications : 
+ - exécuter directement la requete sql pour modifier la table article "ALTER TABLE article ADD file_path_image VARCHAR(255);"
+ - penser à modifier le model /src/Model/Article.php
+ - Information on ne sauvegarde jamais un fichier directement en base de données on sauvegarde le chemin d'accés.
+ - tout file upload doit avoir son nom de fichier modifier 
+ - pour soumettre un formulaire avec un input:file il faut utiliser "enctype="multipart/form-data"" dans la balise form
+ - pour transmettre plusieurs option dans un select multiple il faut définir le name="categories[]"
 
-### Consignes
-
+### Consignes :
+ - la page de création d'un article n'est accessible qu'au utilisateur connecter
+ - Attention il faut bloquer l'accés à la page aux niveau de la page et au niveau du controller avec un redirecte vers la page home par exemple
+ - le bouton d'accés à la page de création d'article se trouve sur la page qui liste les articles
+ - ajouter id lors de la connexion de l'utilisateur dans la session "$_SESSION['user_id'] = $user->getId();"
+ - Créer le formulaire /template/article/template_part/__add_form.phtml
+ - il comporte un titre (input, text, title), categories (select, multiple, categories ), contenu (textarea, content), image (input, file, image)
+ - 
 
 ## ETAPE 8 : SUPPRESSION D'ARTICLE
 
