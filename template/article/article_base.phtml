@@ -1,5 +1,5 @@
 <h1>Liste des articles</h1>
-<?php if (isset($_SESSION["user_is_connected"]) && $_SESSION["user_is_connected"]) { ?>
+<?php if (Service::checkIfUserIsConnected()) { ?>
 	<div class="d-flex justify-content-end mb-3">
 		<a class="btn btn-warning" href="/?page=article_add">Créer un article</a>
 	</div>
@@ -18,15 +18,27 @@
 	<tbody>
 		<?php foreach ($params["articles"] as $key => $article) { ?>
 			<tr>
-				<th scope="row">1</th>
+				<th></th>
 				<td><?php echo $article->getId() ?></td>
 				<td><?php echo $article->getTitle() ?></td>
 				<td><?php echo ($article->getDate_published())->format("d/m/Y") ?></td>
 				<td>
 					<a class="btn btn-primary" href="/?page=article_show&id=<?php echo $article->getId() ?>">Voir</a>
+					<?php if (Service::checkIfUserIsConnected()) { ?>
+						<button type="button" 
+							class="btn btn-danger js_article_button_deleted" 
+							data-bs-toggle="modal" 
+							data-bs-target="#exampleModal" 
+							data-article_id="<?php echo $article->getId() ?>"
+						>
+							Supprimer
+						</button>
+					<?php }  ?>
 				</td>
 			</tr>
 		<?php } ?>
-
 	</tbody>
 </table>
+
+
+<?php include_once dirname(__DIR__) . "/article/template_part/__deleted_modal.phtml"; ?>

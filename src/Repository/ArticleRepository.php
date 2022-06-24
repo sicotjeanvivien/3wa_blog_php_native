@@ -57,7 +57,7 @@ class ArticleRepository extends AbstractRepository
     }
 
     /**
-     * @param Article article 
+     * @param Article $article 
      * @param Category $category
      * @return void
      */
@@ -70,5 +70,25 @@ class ArticleRepository extends AbstractRepository
             "category_id" => $category->getId()
         ];
         return  $this->executeQuery($query, "", $params);
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function deleted(Article $article)
+    {
+        // supprime les lignes de article_category lié à l'article supprimé
+        $query = "DELETE FROM article_category WHERE article_id = :article_id;";
+        $params = [
+            ":article_id" => $article->getId()
+        ];
+        $this->executeQuery($query, "article", $params);
+        
+        // supprime la ligne de l'article
+        $query = "DELETE FROM article WHERE id = :id";
+        $params = [
+            ":id" => $article->getId()
+        ];
+        return $this->executeQuery($query, "article", $params);
     }
 }

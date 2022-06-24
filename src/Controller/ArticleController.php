@@ -8,15 +8,23 @@ class ArticleController extends AbstractController
 {
 
     /**
+     * @var ArticleRepository $articleRepository
+     */
+    private ArticleRepository $articleRepository;
+
+    public function __construct()
+    {
+        $this->articleRepository = new ArticleRepository();
+    }
+
+    /**
      * @Route articles
      */
     public function index(): string
     {
-        $articles = [];
-        $articleRepository =  new ArticleRepository();
-        $articles = $articleRepository->findAll();
-
-        return $this->renderView("/template/article/article_base.phtml", ["articles" => $articles]);
+        return $this->renderView("/template/article/article_base.phtml", [
+            "articles" => $this->articleRepository->findAll()
+        ]);
     }
 
     /**
@@ -26,10 +34,9 @@ class ArticleController extends AbstractController
     {
         $article = null;
         if (isset($_GET["id"])) {
-            $articleRepository = new ArticleRepository();
             $userRepository = new UserRepository();
             $categoryRepository = new CategoryRepository();
-            $article = $articleRepository->find($_GET["id"]);
+            $article = $this->articleRepository->find($_GET["id"]);
             $user = $userRepository->find($article->getUser_id());
             $categories = $categoryRepository->findByArticle($article);
         }
@@ -52,7 +59,6 @@ class ArticleController extends AbstractController
             $error = null;
             $message =  "";
             $categoryRepository = new CategoryRepository();
-            $articleRepository = new ArticleRepository();
             if (
                 !empty($_POST)
                 && isset($_POST["title"], $_POST["content"], $_POST["categories"])
@@ -70,12 +76,12 @@ class ArticleController extends AbstractController
                     $article->setDate_published((new DateTime("now"))->format("Y-m-d H:i:s"));
                     $article->setUser_id($_SESSION["user_id"]);
                     $article->setFile_path_image($filePath);
-                    $articleRepository->add($article);
-                    $article = $articleRepository->findLast();
+                    $this->articleRepository->add($article);
+                    $article = $this->articleRepository->findLast();
                     $categories = Service::checkCategoriesExist($_POST["categories"]);
 
                     foreach ($categories as $key => $category) {
-                        $articleRepository->insertCategory($article, $category);
+                        $this->articleRepository->insertCategory($article, $category);
                     }
                     header("Location: /?page=article");
                 }
@@ -87,5 +93,24 @@ class ArticleController extends AbstractController
             ]);
         }
         header("Location: /?page=home");
+    }
+
+    /**
+     * @Route article_deleted
+     */
+    public function deleted()
+    {
+        if (
+            Service::checkIfUserIsConnected()
+            && isset($_GET["article_id"])
+            && $article = $this->articleRepository->find($_GET["article_id"])
+        ) {
+            //supprime l'image lié à l'article 
+            unlink(dirname(__DIR__, 2) . "/public/" . $article->getFile_path_image());
+            // supprime l'article
+            $this->articleRepository->deleted($article);
+            // Redirect vers la page listant les articles 
+            header("Location: /?page=article");
+        }
     }
 }

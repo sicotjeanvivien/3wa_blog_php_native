@@ -5,6 +5,8 @@ require_once dirname(__DIR__) . "/Controller/ContactController.php";
 require_once dirname(__DIR__) . "/Controller/HomeController.php";
 require_once dirname(__DIR__) . "/Controller/UserController.php";
 
+require_once dirname(__DIR__) . "/service/Service.php";
+
 
 /**
  * Constant stockant le routing de l'application, si on veut rajouter une url c'est ici
@@ -25,6 +27,10 @@ const ROUTING = [
     "article_add" => [
         "controller" => "ArticleController",
         "action" => "add"
+    ],
+    "article_deleted" => [
+        "controller" => "ArticleController",
+        "action" => "deleted"
     ],
     "user_connexion" => [
         "controller" => "UserController",
