@@ -12,9 +12,15 @@ class ArticleController extends AbstractController
      */
     private ArticleRepository $articleRepository;
 
+    /**
+     * @var CategoryRepository $categoryRepository
+     */
+    private CategoryRepository $categoryRepository;
+
     public function __construct()
     {
         $this->articleRepository = new ArticleRepository();
+        $this->categoryRepository = new CategoryRepository();
     }
 
     /**
@@ -58,7 +64,6 @@ class ArticleController extends AbstractController
         ) {
             $error = null;
             $message =  "";
-            $categoryRepository = new CategoryRepository();
             if (
                 !empty($_POST)
                 && isset($_POST["title"], $_POST["content"], $_POST["categories"])
@@ -89,7 +94,7 @@ class ArticleController extends AbstractController
             return $this->renderView("/template/article/article_add.phtml", [
                 "error" => $error,
                 "message" => $message,
-                "categories" => $categoryRepository->findAll()
+                "categories" => $this->categoryRepository->findAll()
             ]);
         }
         header("Location: /?page=home");
@@ -112,5 +117,48 @@ class ArticleController extends AbstractController
             // Redirect vers la page listant les articles 
             header("Location: /?page=article");
         }
+    }
+
+    /**
+     * @Route article_update 
+     */
+    public function update()
+    {
+        if (
+            isset($_GET["article_id"])
+            && $article = $this->articleRepository->find($_GET["article_id"])
+        ) {
+            if (
+                $_POST
+                && isset($_POST["title"], $_POST["content"], $_POST["categories"])
+                && strlen($title = trim($_POST["title"]))
+                && strlen($content = trim($_POST["content"]))
+                && count($categories = $_POST["categories"])
+            ) {
+                $article =  new Article();
+                $article->setTitle($title);
+                $article->setContent($content);
+                $article->setDate_published((new DateTime("now"))->format("Y-m-d H:i:s"));
+                $article->setUser_id($_SESSION["user_id"]);
+                $article->setFile_path_image($filePath);
+                $this->articleRepository->add($article);
+                $article = $this->articleRepository->findLast();
+                $categories = Service::checkCategoriesExist($_POST["categories"]);
+
+                foreach ($categories as $key => $category) {
+                    $this->articleRepository->insertCategory($article, $category);
+                }
+                header("Location: /?page=article");
+            }
+            return $this->renderView(
+                "/template/article/article_update.phtml",
+                [
+                    "article" => $article,
+                    "categories" => $this->categoryRepository->findAll(),
+                    "article_category" => $this->categoryRepository->findByArticle($article)
+                ]
+            );
+        }
+        header("Location: /?page=home");
     }
 }

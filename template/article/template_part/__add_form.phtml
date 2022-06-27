@@ -1,23 +1,43 @@
+<?php
+$title = null;
+$content = null;
+$article_category = [];
+$file_path_image = null;
+if (isset($params["article"], $params["article_category"])) {
+    $title = $params["article"]->getTitle();
+    $content = $params["article"]->getContent();
+    $file_path_image = $params["article"]->getFile_path_image();
+    foreach ($params["article_category"] as $key => $category_article) $article_category[] = $category_article->getId();
+}
+?>
+
 <form method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
-        <input type="text" class="form-control" id="title" name="title">
+        <input type="text" class="form-control" id="title" name="title" value="<?php if (!empty($title)) echo $title; ?>">
     </div>
     <div class="mb-3">
         <label for="category" class="form-label">Catégorie</label>
-        <select class="form-select" id="categories" multiple name="categories[]" >
+        <select class="form-select" id="categories" multiple name="categories[]">
             <?php foreach ($params["categories"] as $key => $category) { ?>
-                <option value="<?php echo $category->getId(); ?>"><?php echo $category->getName(); ?></option>
+                <option value="<?php echo $category->getId(); ?>" <?php if (in_array($category->getId(), $article_category)) echo "selected"; ?>>
+                    <?php echo $category->getName(); ?>
+                </option>
             <?php } ?>
         </select>
     </div>
     <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" class="form-control" name="img" id="image">
+        <div>
+            <img src="<?php echo $file_path_image ?>" alt="">
+        </div>
+        <div>
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" name="img" id="image" value="<?php echo $file_path_image ?>">
+        </div>
     </div>
     <div class="mb-3">
         <label for="content">Contenu</label>
-        <textarea class="form-control" name="content" placeholder="Contenu de l'article..." id="content" cols="10" rows="10"></textarea>
+        <textarea class="form-control" name="content" placeholder="Contenu de l'article..." id="content" cols="10" rows="10"><?php if (!empty($content)) echo $content ?></textarea>
     </div>
     <input type="submit" class="btn btn-warning" value="Créer" name="valide">
 </form>
