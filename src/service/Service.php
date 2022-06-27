@@ -48,8 +48,10 @@ class Service
     {
         $categories = null;
         $categoryRepository = new CategoryRepository();
+        // cherche si une category existe avec l'Id passé 
         foreach ($categoriesSearched as $key => $categorySearch) {
-            $categories[] =  $categoryRepository->find(intval($categorySearch));
+            // si oui on ajoute un element à notre array
+            if ($category = $categoryRepository->find(intval($categorySearch))) $categories[] =  $category;
         }
         return $categories;
     }
