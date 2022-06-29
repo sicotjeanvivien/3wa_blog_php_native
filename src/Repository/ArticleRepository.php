@@ -77,18 +77,30 @@ class ArticleRepository extends AbstractRepository
      */
     public function deleted(Article $article)
     {
-        // supprime les lignes de article_category lié à l'article supprimé
-        $query = "DELETE FROM article_category WHERE article_id = :article_id;";
-        $params = [
-            ":article_id" => $article->getId()
-        ];
-        $this->executeQuery($query, "article", $params);
-        
         // supprime la ligne de l'article
         $query = "DELETE FROM article WHERE id = :id";
         $params = [
             ":id" => $article->getId()
         ];
         return $this->executeQuery($query, "article", $params);
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function update(Article $article)
+    {
+        $query = "UPDATE article SET 
+                    title = :title, 
+                    content = :content, 
+                    file_path_image= :file_path_image 
+                WHERE id = :id;";
+        $params = [
+            ":id" => $article->getId(),
+            ":title" => $article->getTitle(),
+            ":content" => $article->getContent(),
+            ":file_path_image" => $article->getFile_path_image()
+        ];
+        return $this->executeQuery($query, "Article", $params);
     }
 }
