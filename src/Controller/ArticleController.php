@@ -17,7 +17,7 @@ class ArticleController extends AbstractController
      * @var CategoryRepository $categoryRepository
      */
     private CategoryRepository $categoryRepository;
-   
+
     /**
      * @var ArticleCategoryRepository $articleCategoryRepository
      */
@@ -150,7 +150,8 @@ class ArticleController extends AbstractController
                 if ($_FILES["img"]["size"]) {
                     $file_path_image = Service::moveFile($_FILES["img"]);
                     if ($file_path_image) {
-                        unlink(dirname(__DIR__, 2) . "/public/" . $article->getFile_path_image());
+                        $file_deleted = dirname(__DIR__, 2) . "/public/" . $article->getFile_path_image();
+                        if (file_exists($file_deleted)) unlink($file_deleted);
                         $article->setFile_path_image($file_path_image);
                     }
                 }
@@ -162,7 +163,6 @@ class ArticleController extends AbstractController
                 foreach ($categories as $key => $category) {
                     $this->articleRepository->insertCategory($article, $category);
                 }
-                
             }
             return $this->renderView(
                 "/template/article/article_update.phtml",
